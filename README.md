@@ -5,6 +5,6 @@ and inline images to a folder of your choice.
 
 # Usage:
 
-./mbinder.py -i all.mbox -o attachments
+`./mbinder.py -i all.mbox -o attachments`
 
 The output directory will be created if it doesn't exist.
