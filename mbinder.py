@@ -111,12 +111,6 @@ class Extractor:
         if (not options.no_inline_images) and (not self.inline_image_folder.exists()):
             self.inline_image_folder.mkdir(parents=True, exist_ok=True)
 
-        # self.inline_image_folder = os.path.join(options.output, "inline_images/")
-        # if (not options.no_inline_images) and (
-        #     not os.path.exists(self.inline_image_folder)
-        # ):
-        #     os.makedirs(self.inline_image_folder)
-
     def increment_total(self):
         self.__total += 1
 
@@ -266,11 +260,10 @@ def check_part(extractor, mid, part, attachments_counter):
         and (part.get_filename() is not None)
     ):
         save(extractor, mid, part, attachments_counter)
-    elif (
-        (mime_type.startswith("application/") and mime_type != "application/javascript")
-        or mime_type.startswith("model/")
-        or mime_type.startswith("audio/")
-        or mime_type.startswith("video/")
+
+    elif any(
+        mime_type.startswith(prefix)
+        for prefix in ("application/", "model/", "audio/", "video/")
     ):
         message_id_content_type = f"Message id = {mid}, Content-type = {mime_type}."
         if part.get_content_disposition() == "inline":
