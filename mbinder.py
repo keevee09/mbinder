@@ -261,9 +261,12 @@ def check_part(extractor, mid, part, attachments_counter):
     ):
         save(extractor, mid, part, attachments_counter)
 
-    elif any(
-        mime_type.startswith(prefix)
-        for prefix in ("application/", "model/", "audio/", "video/")
+    elif (
+        any(
+            mime_type.startswith(prefix)
+            for prefix in ("application/", "model/", "audio/", "video/")
+        )
+        and mime_type != "application/javascript"
     ):
         message_id_content_type = f"Message id = {mid}, Content-type = {mime_type}."
         if part.get_content_disposition() == "inline":
